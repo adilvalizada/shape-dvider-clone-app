@@ -16,6 +16,7 @@ const ContentWrapper = styled.div`
         hsl(45deg 100% 50%) 89%,
         hsl(55deg 100% 50%) 100%
       );
+      z-index: -1;
       height: 666px;
       border-radius: 0 0 10px 10px;
       position: relative;

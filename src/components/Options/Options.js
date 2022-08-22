@@ -5,6 +5,22 @@ import Switch from "react-switch";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import ReactTooltip from "react-tooltip";
+import Modal from "react-modal";
+import ModalContent from "../ModalContent";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+};
 
 function Options({ data, updateData }) {
   const [flipChecked, setFlipChecked] = useState(data.flip);
@@ -14,6 +30,7 @@ function Options({ data, updateData }) {
   const [width, setWidth] = useState(data.width);
   const [color, setColor] = useState(data.color);
   const [shape, setShape] = useState(data.shape);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const flipHandleChange = () => {
     setFlipChecked(!flipChecked);
@@ -22,6 +39,14 @@ function Options({ data, updateData }) {
   const invertHandleChange = () => {
     setInvertChecked(!invertChecked);
   };
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   const positionHandleChange = () => {
     setPositionChecked(!positionChecked);
@@ -187,6 +212,7 @@ function Options({ data, updateData }) {
           />
         </div>
       </div>
+
       <div className="row justify-content-center pb-5">
         <div className="col-11 col-lg-6 mt-3 mt-lg-0">
           <label className="font-bold text-lg" htmlFor="height">
@@ -229,9 +255,22 @@ function Options({ data, updateData }) {
           <ReactTooltip id="width" />
         </div>
       </div>
-      <button className="shadow flex justify-center items-center">
+
+      <button
+        onClick={openModal}
+        className="shadow flex justify-center items-center"
+      >
         <i class="fa-solid fa-cloud-arrow-down"></i>
       </button>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <ModalContent data={data} />
+      </Modal>
     </OptionsWrapper>
   );
 }
